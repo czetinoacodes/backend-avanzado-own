@@ -27,5 +27,7 @@ class Product extends Model
         );
     }
 
+    //COMENTARIO DE PRUEBA PARA GITHUB
+    
 
 }
