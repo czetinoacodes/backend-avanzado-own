@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->decimal('total', 10, 2);
+            $table->string('status')->default('pending');
+            $table->foreignId('client_id')->constrained('clients')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -23,12 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('orders');
     }
 };
-
-/*
-\App\Models\Category::create(['name'=>'Ropa']); 
-\App\Models\Category::create(['name'=>'Calzado']); 
-\App\Models\Category::create(['name'=>'Tecnología']); 
-*/
