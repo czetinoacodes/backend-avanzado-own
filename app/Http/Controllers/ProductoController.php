@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Resources\ProductResource;
 
 class ProductoController extends Controller
 {
@@ -12,15 +14,17 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        //
+        return ProductResource::collection(Product::with('category')->paginate(10));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        //
+        $product = Product::create($request->validated());
+        return (new ProductResource($product->load('category')))
+        ->response()->setStatusCode(201);
     }
 
     /**
@@ -28,7 +32,7 @@ class ProductoController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        return new ProductResource($product->load('category'));
     }
 
     /**
