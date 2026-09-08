@@ -18,7 +18,7 @@ class OrderResource extends JsonResource
             'id' => $this->id,
             'total' => $this->total,
             'status' => $this->status,
-            'client_id' => $this->whenLoaded('client', fn() => $this->client->email),
+            'cliente' => $this->whenLoaded('client', fn() => $this->client->email),
         ];
     }
 }

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->decimal('price', 10, 2);
             $table->integer('stock')->default(0);
+            $table->boolean('is_featured')->default(false);
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });

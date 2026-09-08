@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class Product extends Model
 {
-    protected $fillable = ['name', 'price', 'stock', 'category_id'];
+    protected $fillable = ['name', 'price', 'stock', 'is_featured', 'category_id'];
 
     public function category()
     {
