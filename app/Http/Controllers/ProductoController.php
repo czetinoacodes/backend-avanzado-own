@@ -6,6 +6,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Resources\ProductResource;
+use App\Services\ProductService;
 
 class ProductoController extends Controller
 {
@@ -20,11 +21,14 @@ class ProductoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProductRequest $request)
+    public function store(StoreProductRequest $request, ProductService $service)
     {
-        $product = Product::create($request->validated());
+        //$product = Product::create($request->validated());
+        $product = $service->createProduct($request->validated());
+
         return (new ProductResource($product->load('category')))
         ->response()->setStatusCode(201);
+
     }
 
     /**
