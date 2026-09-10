@@ -13,7 +13,6 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::apiResource('products', ProductoController::class);
 Route::apiResource('orders', OrderController::class);
 Route::apiResource('orders', OrderController::class);
 
@@ -24,3 +23,10 @@ Route::get('/me', [AuthController::class, 'me']);
 
 
 Route::get('/meByEmail', [AuthController::class, 'meByEmail']);
+
+Route::middleware('auth:api')->group(function () {
+    Route::get('/me', [AuthController::class, 'me']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::apiResource('products', ProductoController::class);
+
+});
