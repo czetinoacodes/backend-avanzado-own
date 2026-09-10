@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use OpenApi\Attributes as OA;
 
 class AuthController extends Controller
 {
@@ -28,6 +29,31 @@ class AuthController extends Controller
         return response()->json(['user' => $user], 201);
     }
 
+     #[OA\Post(
+        path: "/api/login",
+        summary: "Autenticar usuario y obtener token JWT",
+        tags: ["Auth"],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                required: ["email", "password"],
+                properties: [
+                    new OA\Property(property: "email", type: "string", example: "ana@correo.com"),
+                    new OA\Property(property: "password", type: "string", example: "secreta123"),
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: "Login exitoso",
+                content: new OA\JsonContent(
+                    properties: [new OA\Property(property: "access_token", type: "string")]
+                )
+            ),
+            new OA\Response(response: 401, description: "Credenciales inválidas")
+        ]
+    )]
     public function login(Request $request)
     {
         $request->validate([

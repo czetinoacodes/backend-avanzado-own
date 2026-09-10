@@ -6,6 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Facades\DB;
+use OpenApi\Attributes as OA;
+
+
+#[OA\Schema(
+    schema: "Product",
+    required: ["name", "price", "category_id"],
+    properties: [
+        new OA\Property(property: "id", type: "integer", example: 1),
+        new OA\Property(property: "name", type: "string", example: "Iphone 18 Ultra"),
+        new OA\Property(property: "price", type: "numeric", example: 119.95),
+        new OA\Property(property: "stock", type: "integer", example: 15),
+        new OA\Property(property: "is_featured", type: "boolean", example: true),
+        new OA\Property(property: "category_id", type: "integer", example: 3),
+    ]
+)]
 
 class Product extends Model
 {
